@@ -19,7 +19,7 @@ import java.util.Properties;
 public class PropertiesHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesHandler.class);
-    private static final String PATH = "src/main/resources/jfsql_app.properties";
+    private static final String PATH = "src/main/resources/jfsqlApp.properties";
     private static Properties properties = new Properties();
     private static boolean isInitialized = false;
 

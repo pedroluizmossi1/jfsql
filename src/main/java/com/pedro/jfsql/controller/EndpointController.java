@@ -19,25 +19,25 @@ public class EndpointController {
     private EndpointHandler endpointHandler;
 
     @GetMapping
-    @Operation(summary = "All Connections", description = "Get all connections")
+    @Operation(summary = "All Endpoints", description = "Get all Endpoints")
     public List<Endpoint> getAllEndpoints() {
         return endpointHandler.findAllEndpoints();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Connection by ID", description = "Get a connection by id")
+    @Operation(summary = "Endpoint by ID", description = "Get a endpoint by id")
     public Endpoint getEndpointById(@PathVariable Long id) {
         return endpointHandler.findEndpointById(id);
     }
 
     @PostMapping
-    @Operation(summary = "Create Connection", description = "Create a new connection")
+    @Operation(summary = "Create Endpoint", description = "Create a new endpoint")
     public void createEndpoint(@RequestBody Endpoint endpoint) {
         endpointHandler.createEndpoint(endpoint);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete Connection", description = "Delete a connection by id")
+    @Operation(summary = "Delete Endpoint", description = "Delete a endpoint by id")
     public void deleteEndpoint(@PathVariable Long id) {
         endpointHandler.deleteEndpoint(id);
     }
