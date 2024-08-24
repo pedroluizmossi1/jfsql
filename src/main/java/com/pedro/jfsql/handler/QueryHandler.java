@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class QueryHandler {
@@ -33,4 +34,7 @@ public class QueryHandler {
         queryService.deleteQuery(id);
     }
 
+    public List<Map<String, Object>> executeQueryHandler(String connectionId, String query) {
+        return queryService.executeQuery(connectionId, query);
+    }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE connections ALTER COLUMN id SET DEFAULT nextval('connections_id_seq');

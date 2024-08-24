@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.pedro.jfsql.util.I18n.*;
 import com.pedro.jfsql.handler.DatabaseHandler;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import static com.pedro.jfsql.util.I18n.StartTranslation;
 

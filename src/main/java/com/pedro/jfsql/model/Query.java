@@ -21,7 +21,8 @@ import java.util.List;
 @JsonIgnoreProperties(value = {"endpoints"}, allowSetters = true)
 public class Query {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "queries_seq")
+    @SequenceGenerator(name = "queries_seq", sequenceName = "queries_id_seq", allocationSize = 1)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Long id;

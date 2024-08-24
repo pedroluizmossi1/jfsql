@@ -1,0 +1,1 @@
+ALTER TABLE queries ALTER COLUMN id SET DEFAULT nextval('queries_id_seq');

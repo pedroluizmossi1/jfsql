@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/queries")
@@ -45,6 +46,10 @@ public class QueryController {
         queryHandler.deleteQueryHandler(id);
     }
 
-
+    @PostMapping("/execute/{connectionId}")
+    @Operation(summary = "Execute Query", description = "Execute a query")
+    public List<Map<String, Object>> executeQuery(@RequestBody String query, @PathVariable String connectionId) {
+        return queryHandler.executeQueryHandler(connectionId, query);
+    }
 }
 

@@ -14,7 +14,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "endpoints")
 public class Endpoint {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endpoints_seq")
+    @SequenceGenerator(name = "endpoints_seq", sequenceName = "endpoints_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     @JsonIgnore
     private Long id;

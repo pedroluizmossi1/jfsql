@@ -21,7 +21,8 @@ import java.util.List;
 public class Connection{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "connections_seq")
+    @SequenceGenerator(name = "connections_seq", sequenceName = "connections_id_seq", allocationSize = 1)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Long id;

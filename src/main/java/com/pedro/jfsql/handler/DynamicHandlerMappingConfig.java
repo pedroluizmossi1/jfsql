@@ -36,7 +36,7 @@ public class DynamicHandlerMappingConfig {
 
     public void refreshMappings() throws NoSuchMethodException {
         // Remove all existing mappings
-        requestMappingHandlerMapping.getHandlerMethods().clear();
+        //requestMappingHandlerMapping.getHandlerMethods().clear();
 
         // Reload endpoints from the database
         List<Endpoint> endpoints = endpointRepository.findAll();

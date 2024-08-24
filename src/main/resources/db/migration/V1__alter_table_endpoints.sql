@@ -1,0 +1,1 @@
+ALTER TABLE endpoints ALTER COLUMN id SET DEFAULT nextval('endpoints_id_seq');
