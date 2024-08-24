@@ -23,6 +23,6 @@ public class GeneratedEndpointService {
     }
 
     public String processEndpoint(Endpoint endpoint) {
-        return "Processed endpoint: " + endpoint.getEndpoint();
+        return "Processed endpoint: " + endpoint.getDescription();
     }
 }

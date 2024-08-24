@@ -1,6 +1,7 @@
 package com.pedro.jfsql.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pedro.jfsql.model.enumeration.HttpMethod;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,9 @@ public class Endpoint {
     @Column(name = "endpoint", nullable = false)
     private String endpoint;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "method", nullable = false)
-    private String method;
+    private HttpMethod method;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -50,6 +52,10 @@ public class Endpoint {
     private Query query;
 
     public Endpoint() {
+    }
+
+    public String getMethod() {
+        return method.toString();
     }
 
 }
