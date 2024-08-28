@@ -1,4 +1,5 @@
 name: Qodana
+
 on:
   workflow_dispatch:
   pull_request:
@@ -9,25 +10,42 @@ on:
 jobs:
   qodana:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      # Set up GraalVM
       - name: Set up GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
           distribution: 'graalvm'
 
+      - name: Validate Maven Wrapper
+        run: mvn --version
+        working-directory: JVM/jacoco/maven
+
       - name: Build and test with JaCoCo
         run: mvn clean test
+        working-directory: JVM/jacoco/maven
+
+      - name: Create coverage directory
+        run: mkdir -p .qodana/code-coverage
 
       - name: Prepare coverage data
-        run: mv target/jacoco.exec .qodana/code-coverage/
+        run: |
+          if [ -f JVM/jacoco/maven/target/jacoco.exec ]; then
+            mv JVM/jacoco/maven/target/jacoco.exec .qodana/code-coverage/
+          else
+            echo "JaCoCo coverage file not found!"
+            exit 1
+          fi
 
       - name: Qodana Scan
         uses: JetBrains/qodana-action@v2023.3.2
+        with:
+          args: "-i,JVM/jacoco/maven,--linter,jetbrains/qodana-jvm:2023.3-eap"
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
