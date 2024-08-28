@@ -10,13 +10,12 @@ import java.util.Optional;
 @Service
 public class GeneratedEndpointService {
 
-    @Autowired
     private final EndpointRepository endpointRepository;
 
+    @Autowired
     public GeneratedEndpointService(EndpointRepository endpointRepository) {
         this.endpointRepository = endpointRepository;
     }
-
 
     public Optional<Endpoint> getEndpointData(String endpoint) {
         return endpointRepository.findByEndpoint(endpoint);

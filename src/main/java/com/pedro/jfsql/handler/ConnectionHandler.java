@@ -38,4 +38,7 @@ public class ConnectionHandler {
         return connectionService.findConnectionById(id);
     }
 
+    public boolean testConnection(Long id) {
+        return connectionService.testConnection(id);
+    }
 }

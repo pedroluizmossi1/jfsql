@@ -52,7 +52,6 @@ public class ConnectionController {
         return new ConnectionStatusResponse(id, "Connection deleted successfully");
     }
 
-
     @GetMapping("/databaseTypes")
     @Operation(summary = "Database Types", description = "Get all database types")
     public DatabaseType[] getDatabaseTypes() {
@@ -65,6 +64,14 @@ public class ConnectionController {
         connection.setId(id);
         connectionHandler.createConnectionHandler(connection);
         return new ConnectionStatusResponse(id, "Connection updated successfully");
+    }
+
+    @GetMapping("/test/{id}")
+    @Operation(summary = "Test Connection", description = "Test a connection")
+    public ConnectionStatusResponse testConnection(@PathVariable Long id) {
+        Connection connection = connectionHandler.findConnectionById(id);
+        connectionHandler.testConnection(connection.getId());
+        return new ConnectionStatusResponse(id, "Connection tested successfully");
     }
 
 }

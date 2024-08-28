@@ -1,5 +1,6 @@
 package com.pedro.jfsql.controller;
 
+import com.pedro.jfsql.controller.dto.QueryRequest;
 import com.pedro.jfsql.handler.QueryHandler;
 import com.pedro.jfsql.model.Query;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,8 +49,8 @@ public class QueryController {
 
     @PostMapping("/execute/{connectionId}")
     @Operation(summary = "Execute Query", description = "Execute a query")
-    public List<Map<String, Object>> executeQuery(@RequestBody String query, @PathVariable String connectionId) {
-        return queryHandler.executeQueryHandler(connectionId, query);
+    public List<Map<String, Object>> executeQuery(@RequestBody QueryRequest queryRequest, @PathVariable String connectionId) throws Exception {
+        return queryHandler.executeQueryHandler(connectionId, queryRequest.getQuery(), queryRequest.getParameters());
     }
 }
 

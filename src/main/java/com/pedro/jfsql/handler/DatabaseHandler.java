@@ -35,7 +35,7 @@ public class DatabaseHandler {
                     try {
                         jdbcTemplate.execute(statement.trim());
                     } catch (DuplicateKeyException e) {
-                        LOGGER.error("Duplicated key:" + e.getMessage());
+                        LOGGER.error("Duplicated key:{}", e.getMessage());
                     }
                 }
                 PropertiesHandler.setPropertiesValue("db.start.data", "false");

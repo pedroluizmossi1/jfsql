@@ -15,7 +15,7 @@ import static com.pedro.jfsql.util.I18n.StartTranslation;
 public class JfsqlApplication {
 
     //LOGGER
-    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JfsqlApplication.class);
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(JfsqlApplication.class, args);

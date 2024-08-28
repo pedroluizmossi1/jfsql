@@ -1,39 +1,53 @@
 package com.pedro.jfsql.modules.database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.select.Select;
 import org.springframework.stereotype.Service;
+
+import java.sql.*;
+import java.util.*;
 
 @Service
 public class DynamicQueryExecutor {
 
-    public static List<Map<String, Object>> executeQuery(String query, Connection connection) throws SQLException {
+    public static List<Map<String, Object>> executeQuery(String query, Connection connection, List<Object> parameters) throws SQLException, JSQLParserException {
         List<Map<String, Object>> results = new ArrayList<>();
-            if (connection == null) {
-                throw new SQLException("Connection is null");
+
+        if (connection == null) {
+            throw new SQLException("Connection is null");
+        }
+
+        // Analisar a query usando JSQLParser
+        Statement stmt = CCJSqlParserUtil.parse(query);
+
+        // Verificar se a query é uma operação SELECT
+        if (!(stmt instanceof Select)) {
+            throw new SQLException("Only SELECT queries are allowed");
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Define os parâmetros
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setObject(i + 1, parameters.get(i));
             }
-        try (
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
 
-            int columnCount = resultSet.getMetaData().getColumnCount();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                int columnCount = resultSet.getMetaData().getColumnCount();
 
-            while (resultSet.next()) {
-                Map<String, Object> row = new HashMap<>();
-                for (int i = 1; i <= columnCount; i++) {
-                    String columnName = resultSet.getMetaData().getColumnName(i);
-                    Object columnValue = resultSet.getObject(i);
-                    row.put(columnName, columnValue);
+                while (resultSet.next()) {
+                    Map<String, Object> row = new HashMap<>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        String columnName = resultSet.getMetaData().getColumnName(i);
+                        Object columnValue = resultSet.getObject(i);
+                        row.put(columnName, columnValue);
+                    }
+                    results.add(row);
                 }
-                results.add(row);
             }
         }
+
         return results;
     }
 }

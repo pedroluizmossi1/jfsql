@@ -21,8 +21,12 @@ import java.util.List;
 @Configuration
 public class OpenApiConfig {
 
+    private final EndpointRepository endpointRepository;
+
     @Autowired
-    private EndpointRepository endpointRepository;
+    public OpenApiConfig(EndpointRepository endpointRepository) {
+        this.endpointRepository = endpointRepository;
+    }
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -55,5 +59,4 @@ public class OpenApiConfig {
         openAPI.setPaths(paths);
         return openAPI;
     }
-
 }

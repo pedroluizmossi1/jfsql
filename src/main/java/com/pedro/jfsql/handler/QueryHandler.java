@@ -34,7 +34,7 @@ public class QueryHandler {
         queryService.deleteQuery(id);
     }
 
-    public List<Map<String, Object>> executeQueryHandler(String connectionId, String query) {
-        return queryService.executeQuery(connectionId, query);
+    public List<Map<String, Object>> executeQueryHandler(String connectionId, String query, List<Object> parameters) throws Exception {
+        return queryService.executeQuery(connectionId, query, parameters);
     }
 }

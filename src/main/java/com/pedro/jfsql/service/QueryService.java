@@ -9,6 +9,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +43,11 @@ public class QueryService {
     }
 
 
-    public List<Map<String, Object>> executeQuery(String connectionId, String query) {
+    public List<Map<String, Object>> executeQuery(String connectionId, String query, List<Object> parameters) throws SQLException {
         Connection connectionIdentity = connectionHandler.findConnectionById(Long.parseLong(connectionId));
         java.sql.Connection connection = initializeConnection("Default", connectionIdentity.getHost(), connectionIdentity.getPort(), connectionIdentity.getDatabase(), connectionIdentity.getUsername(), connectionIdentity.getPassword(), connectionIdentity.getDatabaseType());
         try {
-            return DynamicQueryExecutor.executeQuery(query, connection);
+            return DynamicQueryExecutor.executeQuery(query, connection, parameters);
         } catch (Exception e) {
             throw new ServiceException("Error executing query: " + e);
         }

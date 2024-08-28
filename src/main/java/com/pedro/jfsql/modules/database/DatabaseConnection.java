@@ -16,7 +16,7 @@ public class DatabaseConnection {
     public DatabaseConnection(ConnectionHandler connectionHandler) {
     }
 
-    public static Connection initializeConnection(String name, String host, String port, String database, String username, String password, DatabaseType databaseType) {
+    public static Connection initializeConnection(String name, String host, String port, String database, String username, String password, DatabaseType databaseType) throws SQLException {
         String driver = getDatabaseType(databaseType);
         String url = getUrl(databaseType, host, port, database);
         try {
@@ -27,7 +27,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void closeConnection() {
+    public static void closeConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {

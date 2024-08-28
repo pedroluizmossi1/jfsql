@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 public class I18n {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18n.class);
     private static ResourceBundle bundle;
 
     static {
@@ -28,7 +28,7 @@ public class I18n {
 
     public static String getMessage(String key, String... args) {
         if (args.length > 0) {
-            return String.format(bundle.getString(key), args);
+            return String.format(bundle.getString(key), (Object) args);
         }
         return bundle.getString(key);
     }

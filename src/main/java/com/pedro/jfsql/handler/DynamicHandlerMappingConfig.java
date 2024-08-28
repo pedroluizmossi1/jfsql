@@ -18,11 +18,14 @@ import java.util.List;
 @Configuration
 public class DynamicHandlerMappingConfig {
 
-    @Autowired
-    private EndpointRepository endpointRepository;
+    private final EndpointRepository endpointRepository;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
     @Autowired
-    private RequestMappingHandlerMapping requestMappingHandlerMapping;
+    public DynamicHandlerMappingConfig(EndpointRepository endpointRepository, RequestMappingHandlerMapping requestMappingHandlerMapping) {
+        this.endpointRepository = endpointRepository;
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+    }
 
     @PostConstruct
     public void init() {
