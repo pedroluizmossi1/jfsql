@@ -25,19 +25,17 @@ jobs:
 
       - name: Validate Maven Wrapper
         run: mvn --version
-        working-directory: JVM/jacoco/maven
 
       - name: Build and test with JaCoCo
         run: mvn clean test
-        working-directory: JVM/jacoco/maven
 
       - name: Create coverage directory
         run: mkdir -p .qodana/code-coverage
 
       - name: Prepare coverage data
         run: |
-          if [ -f JVM/jacoco/maven/target/jacoco.exec ]; then
-            mv JVM/jacoco/maven/target/jacoco.exec .qodana/code-coverage/
+          if [ -f target/jacoco.exec ]; then
+            mv target/jacoco.exec .qodana/code-coverage/
           else
             echo "JaCoCo coverage file not found!"
             exit 1
@@ -46,6 +44,6 @@ jobs:
       - name: Qodana Scan
         uses: JetBrains/qodana-action@v2023.3.2
         with:
-          args: "-i,JVM/jacoco/maven,--linter,jetbrains/qodana-jvm:2023.3-eap"
+          args: "-i,.qodana/code-coverage,--linter,jetbrains/qodana-jvm:2023.3-eap"
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
