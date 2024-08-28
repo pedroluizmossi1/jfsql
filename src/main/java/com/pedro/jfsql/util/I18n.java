@@ -27,7 +27,7 @@ public class I18n {
 
     public static String getMessage(String key, String... args) {
         if (args.length > 0) {
-            return String.format(bundle.getString(key), (Object) args);
+            return String.format(bundle.getString(key), args);
         }
         return bundle.getString(key);
     }
