@@ -166,10 +166,14 @@
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>prepare-package</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <dataFile>target/jacoco.exec</dataFile>
+                            <outputDirectory>.qodana/code-coverage</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
