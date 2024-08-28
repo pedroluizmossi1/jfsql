@@ -14,8 +14,13 @@ import java.util.List;
 @Tag(name = "Endpoints API", description = "API for managing endpoints")
 public class EndpointController {
 
+
+    private final EndpointHandler endpointHandler;
+
     @Autowired
-    private EndpointHandler endpointHandler;
+    public EndpointController(EndpointHandler endpointHandler) {
+        this.endpointHandler = endpointHandler;
+    }
 
     @GetMapping
     @Operation(summary = "All Endpoints", description = "Get all Endpoints")

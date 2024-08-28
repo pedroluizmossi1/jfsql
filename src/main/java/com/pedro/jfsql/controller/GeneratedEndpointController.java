@@ -15,8 +15,13 @@ import java.util.Optional;
 @Controller
 public class GeneratedEndpointController {
 
+
+    private final GeneratedEndpointHandler generatedEndpointHandler;
+
     @Autowired
-    private GeneratedEndpointHandler generatedEndpointHandler;
+    public GeneratedEndpointController(GeneratedEndpointHandler generatedEndpointHandler) {
+        this.generatedEndpointHandler = generatedEndpointHandler;
+    }
 
     @RequestMapping("/generated/**")
     @Tag(name = "Generated Endpoints API", description = "API for generated endpoints")
