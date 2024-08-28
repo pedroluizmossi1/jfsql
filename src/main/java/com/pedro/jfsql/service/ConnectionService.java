@@ -39,9 +39,8 @@ public class ConnectionService {
             throw new IllegalArgumentException("ID cannot be null");
         }
         Connection connection = findConnectionById(id);
-        java.sql.Connection conn = null;
         try {
-            conn = DatabaseConnection.initializeConnection("Default", connection.getHost(), connection.getPort(), connection.getDatabase(), connection.getUsername(), connection.getPassword(), connection.getDatabaseType());
+            java.sql.Connection conn = DatabaseConnection.initializeConnection("Default", connection.getHost(), connection.getPort(), connection.getDatabase(), connection.getUsername(), connection.getPassword(), connection.getDatabaseType());
             DatabaseConnection.closeConnection(conn);
             return true;
         } catch (Exception e) {

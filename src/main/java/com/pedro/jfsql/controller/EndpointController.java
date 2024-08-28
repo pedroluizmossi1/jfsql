@@ -2,7 +2,6 @@ package com.pedro.jfsql.controller;
 
 import com.pedro.jfsql.handler.EndpointHandler;
 import com.pedro.jfsql.model.Endpoint;
-import com.pedro.jfsql.repository.EndpointRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

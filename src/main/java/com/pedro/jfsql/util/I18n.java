@@ -1,6 +1,5 @@
 package com.pedro.jfsql.util;
 
-import com.pedro.jfsql.handler.DatabaseHandler;
 import com.pedro.jfsql.handler.PropertiesHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

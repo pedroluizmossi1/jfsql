@@ -1,11 +1,9 @@
 package com.pedro.jfsql.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pedro.jfsql.controller.dto.ConnectionStatusResponse;
 import com.pedro.jfsql.handler.ConnectionHandler;
 import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.enumeration.DatabaseType;
-import com.pedro.jfsql.service.ConnectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

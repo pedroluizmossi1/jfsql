@@ -19,16 +19,8 @@ public class DynamicQueryExecutor {
             throw new SQLException("Connection is null");
         }
 
-        // Analisar a query usando JSQLParser
-        Statement stmt = CCJSqlParserUtil.parse(query);
-
-        // Verificar se a query é uma operação SELECT
-        if (!(stmt instanceof Select)) {
-            throw new SQLException("Only SELECT queries are allowed");
-        }
-
+        validateSelectQuery(query);
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            // Define os parâmetros
             for (int i = 0; i < parameters.size(); i++) {
                 preparedStatement.setObject(i + 1, parameters.get(i));
             }
@@ -47,7 +39,13 @@ public class DynamicQueryExecutor {
                 }
             }
         }
-
         return results;
+    }
+
+    private static void validateSelectQuery(String query) throws JSQLParserException, SQLException {
+        Statement stmt = CCJSqlParserUtil.parse(query);
+        if (!(stmt instanceof Select)) {
+            throw new SQLException("Only SELECT queries are allowed");
+        }
     }
 }
