@@ -49,6 +49,10 @@ public class Connection{
     @Column(name = "db_type", nullable = false)
     private DatabaseType databaseType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "db_conn_mode")
+    private DatabaseConnMode databaseConnMode;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @JsonIgnore
     @CreationTimestamp

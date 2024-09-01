@@ -45,7 +45,15 @@ public class QueryService {
 
     public List<Map<String, Object>> executeQuery(String connectionId, String query, List<Object> parameters) throws SQLException {
         Connection connectionIdentity = connectionHandler.findConnectionById(Long.parseLong(connectionId));
-        java.sql.Connection connection = initializeConnection("Default", connectionIdentity.getHost(), connectionIdentity.getPort(), connectionIdentity.getDatabase(), connectionIdentity.getUsername(), connectionIdentity.getPassword(), connectionIdentity.getDatabaseType());
+        java.sql.Connection connection = initializeConnection(
+                "Default",
+                connectionIdentity.getHost(),
+                connectionIdentity.getPort(),
+                connectionIdentity.getDatabase(),
+                connectionIdentity.getUsername(),
+                connectionIdentity.getPassword(),
+                connectionIdentity.getDatabaseType(),
+                connectionIdentity.getDatabaseConnMode());
         try {
             return DynamicQueryExecutor.executeQuery(query, connection, parameters);
         } catch (Exception e) {

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class ConnectionService {
 
+    private final Logger LOGGER = Logger.getLogger(ConnectionService.class.getName());
     private final ConnectionRepository connectionRepository;
 
     @Autowired
@@ -40,11 +42,19 @@ public class ConnectionService {
         }
         Connection connection = findConnectionById(id);
         try {
-            java.sql.Connection conn = DatabaseConnection.initializeConnection("Default", connection.getHost(), connection.getPort(), connection.getDatabase(), connection.getUsername(), connection.getPassword(), connection.getDatabaseType());
+            java.sql.Connection conn = DatabaseConnection.initializeConnection(
+                    "Default",
+                    connection.getHost(),
+                    connection.getPort(),
+                    connection.getDatabase(),
+                    connection.getUsername(),
+                    connection.getPassword(),
+                    connection.getDatabaseType(),
+                    connection.getDatabaseConnMode());
             DatabaseConnection.closeConnection(conn);
             return true;
         } catch (Exception e) {
-            return false;
+            throw new ServiceException("Error testing connection", e);
         }
     }
 }
