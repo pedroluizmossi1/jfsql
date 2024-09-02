@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Optional;
 
-public class EndpointExceptions {
+public class EndpointExceptions extends RuntimeException{
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public static class EndpointNotFoundException extends RuntimeException {
         public EndpointNotFoundException(String path, Long id) {

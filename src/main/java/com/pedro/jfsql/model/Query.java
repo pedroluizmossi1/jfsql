@@ -35,7 +35,7 @@ public class Query {
 
     @Column(name = "parameters", columnDefinition = "jsonb")
     @Type(JsonBinaryType.class)
-    private List<Parameter> parameters;
+    private List<QueryParameter> parameters;
 
     @Column(name = "active", nullable = false)
     private Boolean active;

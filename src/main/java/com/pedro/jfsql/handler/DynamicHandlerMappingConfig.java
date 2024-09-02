@@ -1,5 +1,6 @@
 package com.pedro.jfsql.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.Endpoint;
 import com.pedro.jfsql.model.Query;
@@ -17,20 +18,24 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Configuration
 public class DynamicHandlerMappingConfig {
 
     private final EndpointRepository endpointRepository;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+    private final GeneratedEndpointHandler generatedEndpointHandler;
 
 
     @Autowired
     public DynamicHandlerMappingConfig(
             EndpointRepository endpointRepository,
-            RequestMappingHandlerMapping requestMappingHandlerMapping) {
+            RequestMappingHandlerMapping requestMappingHandlerMapping,
+            GeneratedEndpointHandler generatedEndpointHandler) {
         this.endpointRepository = endpointRepository;
         this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+        this.generatedEndpointHandler = generatedEndpointHandler;
     }
 
     @PostConstruct
@@ -39,14 +44,13 @@ public class DynamicHandlerMappingConfig {
             refreshMappings();
         } catch (Exception e) {
             e.printStackTrace();
-            // Adicione tratamento de exceção apropriado aqui
         }
     }
 
     public void refreshMappings() throws NoSuchMethodException {
         // Remove all existing mappings
         requestMappingHandlerMapping.getHandlerMethods().forEach((key, value) -> {
-            if (key.getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.equals("/generated/teste1"))) {
+            if (key.getPatternsCondition() != null && key.getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.equals("/generated/**"))) {
                 requestMappingHandlerMapping.unregisterMapping(key);
             }
         });
@@ -81,6 +85,15 @@ public class DynamicHandlerMappingConfig {
     }
 
     public void handleDynamicEndpoint(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        response.getWriter().write("Dynamic Endpoint");
+        String endpoint = request.getRequestURI();
+        Optional<Endpoint> endpointData = generatedEndpointHandler.getEndpointData(endpoint);
+
+        if (endpointData.isPresent()) {
+            List<Map<String, Object>> result = generatedEndpointHandler.processEndpoint(endpointData.get());
+            response.setContentType("application/json");
+            response.getWriter().write(new ObjectMapper().writeValueAsString(result));
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 }

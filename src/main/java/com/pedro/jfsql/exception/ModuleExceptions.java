@@ -5,7 +5,7 @@ import com.pedro.jfsql.util.I18nMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class ModuleExceptions {
+public class ModuleExceptions extends RuntimeException{
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public static class ModuleNotFoundException extends RuntimeException {

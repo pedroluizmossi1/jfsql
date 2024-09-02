@@ -3,6 +3,7 @@ package com.pedro.jfsql.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pedro.jfsql.model.enumeration.DatabaseConnMode;
 import com.pedro.jfsql.model.enumeration.DatabaseType;
 import jakarta.persistence.*;
 import lombok.Getter;

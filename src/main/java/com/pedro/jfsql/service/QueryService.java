@@ -4,6 +4,7 @@ import com.pedro.jfsql.exception.QueryExceptions;
 import com.pedro.jfsql.handler.ConnectionHandler;
 import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.Query;
+import com.pedro.jfsql.model.QueryParameter;
 import com.pedro.jfsql.modules.database.DynamicQueryExecutor;
 import com.pedro.jfsql.repository.QueryRepository;
 import com.pedro.jfsql.util.I18n;
@@ -60,7 +61,7 @@ public class QueryService {
         return queryRepository.save(queryToUpdate);
     }
 
-    public List<Map<String, Object>> executeQuery(Long connectionId, String query, List<Parameter> parameters) throws SQLException {
+    public List<Map<String, Object>> executeQuery(Long connectionId, String query, List<QueryParameter> parameters) throws SQLException {
         Connection connectionIdentity = connectionHandler.findConnectionById(connectionId);
         java.sql.Connection connection = initializeConnection(
                 "Default",

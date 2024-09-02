@@ -2,7 +2,7 @@ package com.pedro.jfsql.modules.database;
 
 
 import com.pedro.jfsql.handler.ConnectionHandler;
-import com.pedro.jfsql.model.DatabaseConnMode;
+import com.pedro.jfsql.model.enumeration.DatabaseConnMode;
 import com.pedro.jfsql.model.enumeration.DatabaseType;
 import org.hibernate.service.spi.ServiceException;
 
