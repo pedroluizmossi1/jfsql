@@ -51,6 +51,15 @@ public class QueryService {
         }
     }
 
+    public Query updateQuery(Long id, Query query) {
+        Query queryToUpdate = queryRepository.findById(id).orElseThrow(() -> new QueryExceptions.QueryNotFoundException(id));
+        queryToUpdate.setQuery(query.getQuery());
+        queryToUpdate.setDescription(query.getDescription());
+        queryToUpdate.setParameters(query.getParameters());
+        queryToUpdate.setActive(query.getActive());
+        return queryRepository.save(queryToUpdate);
+    }
+
     public List<Map<String, Object>> executeQuery(Long connectionId, String query, List<Parameter> parameters) throws SQLException {
         Connection connectionIdentity = connectionHandler.findConnectionById(connectionId);
         java.sql.Connection connection = initializeConnection(
@@ -68,4 +77,5 @@ public class QueryService {
             throw new ServiceException("Error executing query: " + e);
         }
     }
+
 }

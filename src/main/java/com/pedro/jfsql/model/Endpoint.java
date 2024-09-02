@@ -59,4 +59,8 @@ public class Endpoint {
         return method.toString();
     }
 
+    public void setEndpoint(String endpoint) {
+        this.endpoint = "/generated/" + endpoint;
+    }
+
 }

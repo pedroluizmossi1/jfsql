@@ -47,6 +47,12 @@ public class QueryController {
         queryHandler.deleteQueryHandler(id);
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Update Query", description = "Update a query by id")
+    public Query updateQuery(@PathVariable Long id, @RequestBody Query query) {
+        return queryHandler.updateQueryHandler(id, query);
+    }
+
     @PostMapping("/execute/{connectionId}")
     @Operation(summary = "Execute Query", description = "Execute a query")
     public List<Map<String, Object>> executeQuery(@RequestBody QueryRequest queryRequest, @PathVariable Long connectionId) throws Exception {

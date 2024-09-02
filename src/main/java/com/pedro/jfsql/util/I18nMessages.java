@@ -14,4 +14,7 @@ public class I18nMessages {
 
     //QUERY
     public static final String QUERY_NOT_FOUND = "QueryNotFound";
+
+    //ENDPOINT
+    public static final String ENDPOINT_NOT_FOUND = "EndpointNotFound";
 }

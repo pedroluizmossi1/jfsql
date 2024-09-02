@@ -1,5 +1,6 @@
 package com.pedro.jfsql.service;
 
+import com.pedro.jfsql.exception.EndpointExceptions;
 import com.pedro.jfsql.model.Endpoint;
 import com.pedro.jfsql.repository.EndpointRepository;
 
@@ -23,23 +24,27 @@ public class EndpointService {
         endpointRepository.save(endpoint);
     }
 
-    public Endpoint getEndpoint(Long id) {
-        return endpointRepository.findById(id).orElse(null);
-    }
-
     public List<Endpoint> findAllEndpoints() {
         return endpointRepository.findAll();
     }
 
     public Endpoint findEndpointById(Long id) {
-        return endpointRepository.findById(id).orElse(null);
+        return endpointRepository.findById(id).orElseThrow(() -> new EndpointExceptions.EndpointNotFoundException(null, id));
     }
 
     public Optional<Endpoint> findEndpointByPath(String path) {
-        return endpointRepository.findByEndpoint(path);
+        Optional<Endpoint> endpoint = endpointRepository.findByEndpoint(path);
+        if (endpoint.isEmpty()) {
+            throw new EndpointExceptions.EndpointNotFoundException(path, null);
+        }
+        return endpoint;
     }
 
     public void deleteEndpoint(Long id) {
-        endpointRepository.deleteById(id);
+        if (endpointRepository.existsById(id)) {
+            endpointRepository.deleteById(id);
+        } else {
+            throw new EndpointExceptions.EndpointNotFoundException(null, id);
+        }
     }
 }

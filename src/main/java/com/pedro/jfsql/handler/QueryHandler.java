@@ -35,6 +35,10 @@ public class QueryHandler {
         queryService.deleteQuery(id);
     }
 
+    public Query updateQueryHandler(Long id, Query query) {
+        return queryService.updateQuery(id, query);
+    }
+
     public List<Map<String, Object>> executeQueryHandler(Long connectionId, String query, List<Parameter> parameters) throws Exception {
         return queryService.executeQuery(connectionId, query, parameters);
     }
