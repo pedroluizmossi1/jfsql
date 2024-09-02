@@ -1,6 +1,8 @@
 package com.pedro.jfsql.handler;
 
+import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.Endpoint;
+import com.pedro.jfsql.model.Query;
 import com.pedro.jfsql.repository.EndpointRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class DynamicHandlerMappingConfig {
@@ -21,8 +24,11 @@ public class DynamicHandlerMappingConfig {
     private final EndpointRepository endpointRepository;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
+
     @Autowired
-    public DynamicHandlerMappingConfig(EndpointRepository endpointRepository, RequestMappingHandlerMapping requestMappingHandlerMapping) {
+    public DynamicHandlerMappingConfig(
+            EndpointRepository endpointRepository,
+            RequestMappingHandlerMapping requestMappingHandlerMapping) {
         this.endpointRepository = endpointRepository;
         this.requestMappingHandlerMapping = requestMappingHandlerMapping;
     }
@@ -39,7 +45,11 @@ public class DynamicHandlerMappingConfig {
 
     public void refreshMappings() throws NoSuchMethodException {
         // Remove all existing mappings
-        //requestMappingHandlerMapping.getHandlerMethods().clear();
+        requestMappingHandlerMapping.getHandlerMethods().forEach((key, value) -> {
+            if (key.getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.equals("/generated/teste1"))) {
+                requestMappingHandlerMapping.unregisterMapping(key);
+            }
+        });
 
         // Reload endpoints from the database
         List<Endpoint> endpoints = endpointRepository.findAll();
@@ -59,13 +69,18 @@ public class DynamicHandlerMappingConfig {
 
             Method method = DynamicHandlerMappingConfig.class.getMethod("handleDynamicEndpoint", HttpServletRequest.class, HttpServletResponse.class);
 
-            RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(path).methods(methodType).build();
+            // Cria um objeto RequestMappingInfo
+            RequestMappingInfo requestMappingInfo = RequestMappingInfo
+                    .paths(path)
+                    .methods(methodType)
+                    .build();
+
+            // Adiciona o mapeamento ao RequestMappingHandlerMapping
             requestMappingHandlerMapping.registerMapping(requestMappingInfo, this, method);
         }
     }
 
-    public void handleDynamicEndpoint(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Handle the dynamic endpoint logic
+    public void handleDynamicEndpoint(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.getWriter().write("Dynamic Endpoint");
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EndpointService {
@@ -32,6 +33,10 @@ public class EndpointService {
 
     public Endpoint findEndpointById(Long id) {
         return endpointRepository.findById(id).orElse(null);
+    }
+
+    public Optional<Endpoint> findEndpointByPath(String path) {
+        return endpointRepository.findByEndpoint(path);
     }
 
     public void deleteEndpoint(Long id) {

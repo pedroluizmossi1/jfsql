@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class EndpointHandler {
@@ -27,6 +28,10 @@ public class EndpointHandler {
 
     public Endpoint findEndpointById(Long id) {
         return endpointService.findEndpointById(id);
+    }
+
+    public Optional<Endpoint> findEndpointByPath(String path) {
+        return endpointService.findEndpointByPath(path);
     }
 
     public void deleteEndpoint(Long id) {

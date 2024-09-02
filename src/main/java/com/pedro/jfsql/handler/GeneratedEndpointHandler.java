@@ -5,6 +5,9 @@ import com.pedro.jfsql.service.GeneratedEndpointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -21,7 +24,7 @@ public class GeneratedEndpointHandler {
         return generatedEndpointService.getEndpointData(endpoint);
     }
 
-    public String processEndpoint(Endpoint endpoint) {
+    public List<Map<String, Object>> processEndpoint(Endpoint endpoint) throws Exception {
         return generatedEndpointService.processEndpoint(endpoint);
     }
 }

@@ -49,7 +49,7 @@ public class QueryController {
 
     @PostMapping("/execute/{connectionId}")
     @Operation(summary = "Execute Query", description = "Execute a query")
-    public List<Map<String, Object>> executeQuery(@RequestBody QueryRequest queryRequest, @PathVariable String connectionId) throws Exception {
+    public List<Map<String, Object>> executeQuery(@RequestBody QueryRequest queryRequest, @PathVariable Long connectionId) throws Exception {
         return queryHandler.executeQueryHandler(connectionId, queryRequest.getQuery(), queryRequest.getParameters());
     }
 }

@@ -3,6 +3,7 @@ package com.pedro.jfsql.controller.dto;
 
 import java.util.List;
 
+import jakarta.persistence.Parameter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,6 @@ import lombok.Setter;
 @Data
 public class QueryRequest {
     private String query;
-    private List<Object> parameters;
+    private List<Parameter> parameters;
 
 }

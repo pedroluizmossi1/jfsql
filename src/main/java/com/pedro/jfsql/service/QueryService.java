@@ -5,6 +5,7 @@ import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.Query;
 import com.pedro.jfsql.modules.database.DynamicQueryExecutor;
 import com.pedro.jfsql.repository.QueryRepository;
+import jakarta.persistence.Parameter;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,8 @@ public class QueryService {
     }
 
 
-    public List<Map<String, Object>> executeQuery(String connectionId, String query, List<Object> parameters) throws SQLException {
-        Connection connectionIdentity = connectionHandler.findConnectionById(Long.parseLong(connectionId));
+    public List<Map<String, Object>> executeQuery(Long connectionId, String query, List<Parameter> parameters) throws SQLException {
+        Connection connectionIdentity = connectionHandler.findConnectionById(connectionId);
         java.sql.Connection connection = initializeConnection(
                 "Default",
                 connectionIdentity.getHost(),

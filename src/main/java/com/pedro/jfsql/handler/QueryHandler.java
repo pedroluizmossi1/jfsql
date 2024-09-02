@@ -2,6 +2,7 @@ package com.pedro.jfsql.handler;
 
 import com.pedro.jfsql.model.Query;
 import com.pedro.jfsql.service.QueryService;
+import jakarta.persistence.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,7 @@ public class QueryHandler {
         queryService.deleteQuery(id);
     }
 
-    public List<Map<String, Object>> executeQueryHandler(String connectionId, String query, List<Object> parameters) throws Exception {
+    public List<Map<String, Object>> executeQueryHandler(Long connectionId, String query, List<Parameter> parameters) throws Exception {
         return queryService.executeQuery(connectionId, query, parameters);
     }
 }

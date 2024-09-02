@@ -1,5 +1,6 @@
 package com.pedro.jfsql.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pedro.jfsql.handler.GeneratedEndpointHandler;
 import com.pedro.jfsql.model.Endpoint;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -25,15 +29,16 @@ public class GeneratedEndpointController {
 
     @RequestMapping("/generated/**")
     @Tag(name = "Generated Endpoints API", description = "API for generated endpoints")
-    public void handleGeneratedEndpoint(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void handleGeneratedEndpoint(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String endpoint = request.getRequestURI();
         Optional<Endpoint> endpointData = generatedEndpointHandler.getEndpointData(endpoint);
 
         if (endpointData.isPresent()) {
-            String result = generatedEndpointHandler.processEndpoint(endpointData.get());
-            response.getWriter().write(result);
+            List<Map<String, Object>> result = generatedEndpointHandler.processEndpoint(endpointData.get());
+            response.setContentType("application/json");
+            response.getWriter().write(new ObjectMapper().writeValueAsString(result));
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

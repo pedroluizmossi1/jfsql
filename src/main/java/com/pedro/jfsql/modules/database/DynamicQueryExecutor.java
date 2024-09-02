@@ -1,5 +1,6 @@
 package com.pedro.jfsql.modules.database;
 
+import jakarta.persistence.Parameter;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
@@ -12,7 +13,7 @@ import java.util.*;
 @Service
 public class DynamicQueryExecutor {
 
-    public static List<Map<String, Object>> executeQuery(String query, Connection connection, List<Object> parameters) throws SQLException, JSQLParserException {
+    public static List<Map<String, Object>> executeQuery(String query, Connection connection, List<Parameter> parameters) throws SQLException, JSQLParserException {
         List<Map<String, Object>> results = new ArrayList<>();
 
         if (connection == null) {
