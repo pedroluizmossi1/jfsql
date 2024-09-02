@@ -1,14 +1,18 @@
 package com.pedro.jfsql.service;
 
+import com.pedro.jfsql.exception.QueryExceptions;
 import com.pedro.jfsql.handler.ConnectionHandler;
 import com.pedro.jfsql.model.Connection;
 import com.pedro.jfsql.model.Query;
 import com.pedro.jfsql.modules.database.DynamicQueryExecutor;
 import com.pedro.jfsql.repository.QueryRepository;
+import com.pedro.jfsql.util.I18n;
+import com.pedro.jfsql.util.I18nMessages;
 import jakarta.persistence.Parameter;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -32,7 +36,7 @@ public class QueryService {
     }
 
     public Query findQueryById(Long id) {
-        return queryRepository.findById(id).orElse(null);
+        return queryRepository.findById(id).orElseThrow(() -> new QueryExceptions.QueryNotFoundException(id));
     }
 
     public Query createQuery(Query query) {
@@ -40,9 +44,12 @@ public class QueryService {
     }
 
     public void deleteQuery(Long id) {
-        queryRepository.deleteById(id);
+        if (queryRepository.existsById(id)) {
+            queryRepository.deleteById(id);
+        } else {
+            throw new QueryExceptions.QueryNotFoundException(id);
+        }
     }
-
 
     public List<Map<String, Object>> executeQuery(Long connectionId, String query, List<Parameter> parameters) throws SQLException {
         Connection connectionIdentity = connectionHandler.findConnectionById(connectionId);

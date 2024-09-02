@@ -37,8 +37,8 @@ public class QueryController {
 
     @PostMapping
     @Operation(summary = "Create Query", description = "Create a new query")
-    public void createQuery(@RequestBody Query query) {
-        queryHandler.createQueryHandler(query);
+    public Query createQuery(@RequestBody Query query) {
+        return queryHandler.createQueryHandler(query);
     }
 
     @DeleteMapping("/{id}")

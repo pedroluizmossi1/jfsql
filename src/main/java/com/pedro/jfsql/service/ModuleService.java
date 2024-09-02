@@ -28,12 +28,12 @@ public class ModuleService {
 
     public Module findModuleById(String name) {
         return moduleRepository.findByName(name)
-                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(I18n.getMessage(I18nMessages.MODULE_NOT_FOUND, name)));
+                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(name));
     }
 
     public Module createModule(ModuleDto module) {
         if (moduleRepository.findByName(module.getName()).isPresent()) {
-            throw new ModuleExceptions.ModuleAlreadyExistsException(I18n.getMessage(I18nMessages.MODULE_ALREADY_EXISTS, module.getName()));
+            throw new ModuleExceptions.ModuleAlreadyExistsException(module.getName());
         }
         return moduleRepository.save(new Module(module.getName(), module.getDescription(), module.getActive()));
     }
@@ -44,7 +44,7 @@ public class ModuleService {
 
     public void updateModule(String name, Module module) {
         Module moduleToUpdate = moduleRepository.findByName(name)
-                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(I18n.getMessage(I18nMessages.MODULE_NOT_FOUND, name)));
+                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(name));
         moduleToUpdate.setName(module.getName());
         moduleToUpdate.setDescription(module.getDescription());
         moduleToUpdate.setActive(module.getActive());
@@ -53,7 +53,7 @@ public class ModuleService {
 
     public Boolean updateModuleActive(String name) {
         Module module = moduleRepository.findByName(name)
-                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(I18n.getMessage(I18nMessages.MODULE_NOT_FOUND, name)));
+                .orElseThrow(() -> new ModuleExceptions.ModuleNotFoundException(name));
         module.setActive(!module.getActive());
         moduleRepository.save(module);
         return module.getActive();

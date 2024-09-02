@@ -19,8 +19,8 @@ public class QueryHandler {
         this.queryService = queryService;
     }
 
-    public void createQueryHandler(Query query) {
-        queryService.createQuery(query);
+    public Query createQueryHandler(Query query) {
+        return queryService.createQuery(query);
     }
 
     public List<Query> findAllQueries() {

@@ -8,7 +8,10 @@ public class I18nMessages {
 
     //Exception messages
 
+    //MODULE
     public static final String MODULE_NOT_FOUND = "ModuleNotFound";
     public static final String MODULE_ALREADY_EXISTS = "ModuleAlreadyExists";
 
+    //QUERY
+    public static final String QUERY_NOT_FOUND = "QueryNotFound";
 }
